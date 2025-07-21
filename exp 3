@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+// Function prototype for quick sort and partition
+void quickSort(int arr[], int low, int high);
+int partition(int arr[], int low, int high);
+void printArray(int arr[], int size);
+
+int main() {
+    int n;
+
+    // Taking input from the user
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    printf("Enter the elements: ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Display the original array
+    printf("Original array: ");
+    printArray(arr, n);
+
+    // Calling quickSort to sort the array
+    quickSort(arr, 0, n - 1);
+
+    // Display the sorted array
+    printf("Sorted array: ");
+    printArray(arr, n);
+
+    return 0;
+}
+
+// Function for implementing quick sort
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        // Partition the array and get the pivot index
+        int pi = partition(arr, low, high);
+
+        // Recursively sort the left and right sub-arrays
+        quickSort(arr, low, pi - 1);  // Left sub-array
+        quickSort(arr, pi + 1, high); // Right sub-array
+    }
+}
+
+// Function to perform partitioning
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high]; // Pivot is the last element
+    int i = low - 1; // Index of the smaller element
+
+    for (int j = low; j < high; j++) {
+        // If the current element is smaller than or equal to the pivot
+        if (arr[j] <= pivot) {
+            i++;  // Increment index of smaller element
+            // Swap the elements
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    // Swap the pivot element with the element at i+1
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;  // Return the partition index
+}
+
+// Function to print the array
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
